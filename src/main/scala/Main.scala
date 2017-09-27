@@ -40,10 +40,13 @@ object Main extends App {
       list.patch(length-1, Nil, 1)
 
     }
+    else{
+      list
+    }
 
   }
 
-  println(conditionalRemove("a", List("b", "a")))
+  println(conditionalRemove("b", List("b", "a")))
 
   //6
 
