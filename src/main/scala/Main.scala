@@ -16,7 +16,24 @@ object Main extends App {
 
   println(hypotenuse(3,4))
 
-  //6 is Palidrome?
+  //3
+  def reverseDigits(num: Int) = {
+
+      def reverset(x : Int, acc : Int =0):Int = {
+        if(x == 0)
+          acc
+        else{
+          if(Math.abs(Int.MaxValue / 10)  < Math.abs(acc)) 0 else
+            reverset(x/10,acc*10+(x%10))
+        }
+      }
+      reverset(num)
+
+  }
+
+  println(reverseDigits(13))
+
+  //6
 
   def isPalidrome( s: String) = {
     val sanitized = s.toLowerCase.replace(" ","").replaceAll("""[\p{Punct}]""", "")
@@ -31,19 +48,6 @@ object Main extends App {
   }
   isPalidrome("racecar")
   isPalidrome("evee")
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
