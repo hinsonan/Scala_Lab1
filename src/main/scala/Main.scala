@@ -33,6 +33,18 @@ object Main extends App {
 
   println(reverseDigits(13))
 
+  //4
+  def conditionalRemove(removeString: String,list: List[String]) = {
+    val length = list.length
+    if(removeString.equals(list(length-1))){
+      list.patch(length-1, Nil, 1)
+
+    }
+
+  }
+
+  println(conditionalRemove("a", List("b", "a")))
+
   //6
 
   def isPalidrome( s: String) = {
@@ -52,3 +64,5 @@ object Main extends App {
 
 
 }
+
+
