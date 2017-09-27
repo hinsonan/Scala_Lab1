@@ -1,13 +1,20 @@
+import math._
+
 object Main extends App {
 
   //1
   def circleArea ( radius: Double) = {
-    var area = math.Pi * radius * radius
-    println(area)
+    math.Pi * radius * radius
   }
 
-  circleArea(6)
+  println(circleArea(6))
 
+  //2
+  def hypotenuse(side1: Double, side2:Double) ={
+    sqrt((side1 * side1) + (side2 * side2))
+  }
+
+  println(hypotenuse(3,4))
 
   //6 is Palidrome?
 
