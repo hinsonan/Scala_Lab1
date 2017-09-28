@@ -1,5 +1,5 @@
 import math._
-
+import scala.collection.mutable.ListBuffer
 object Main extends App {
 
   //1
@@ -48,7 +48,7 @@ object Main extends App {
 
   println(conditionalRemove("b", List("b", "a")))
 
-  //6
+  //5
 
   def isPalidrome( s: String) = {
     val sanitized = s.toLowerCase.replace(" ","").replaceAll("""[\p{Punct}]""", "")
@@ -63,6 +63,32 @@ object Main extends App {
   }
   isPalidrome("racecar")
   isPalidrome("evee")
+
+  //6
+  def isPerfectNumber(num: Int) : (Boolean, List[Int]) = {
+    var list = ListBuffer[Int]()
+
+    var sum = 0
+    for (i <- 1 to num -1 ){
+      if((num % i) == 0){
+        sum = sum + i
+        list += i
+
+      }
+
+    }
+    if(sum == num){
+      return (true, list.toList)
+    }
+    else{
+      return (false, list.toList)
+    }
+
+
+  }
+
+  println(isPerfectNumber(6))
+
 
 
 
