@@ -64,6 +64,39 @@ object Main extends App {
   isPalidrome("racecar")
   isPalidrome("evee")
 
+  def isPalidrome( i: Int) = {
+    //val filter = i.replace(" ","").replaceAll("""[\p{Punct}]""", "")
+    val reverse = reverseDigits(i)
+    if (reverse == i){
+      println(true)
+    }
+    else{
+      println(false)
+    }
+  }
+  isPalidrome(123)
+  isPalidrome(233)
+
+  def isPalidrome(list: List[Any]) = {
+    def reverse[A](l: List[A]): List[A] = {
+      def _reverse(res: List[A], rem: List[A]): List[A] = rem match {
+        case Nil => res
+        case h :: tail => _reverse(h :: res, tail)
+      }
+      _reverse(Nil, l)
+    }
+    val rev = reverse(list)
+    if (rev == list){
+      println(true)
+    }
+    else{
+      println(false)
+    }
+  }
+  isPalidrome(List ("a", "b", "b", "a"))
+  isPalidrome(List ("a", "b", "c", "a"))
+
+
   //6
   def isPerfectNumber(num: Int) = {
     var list = ListBuffer[Int]()
@@ -92,7 +125,7 @@ object Main extends App {
   Stats.mean(List(5.0, 4.0, 3.0))
   Stats.min(List(5.0, 4.0, 3.0))
   Stats.max(List(5.0, 4.0, 3.0))
-  Stats.mode(List(5.0, 4.0, 3.0, 3.0))
+  Stats.mode(List(5.0, 4.0, 3.0, 3.0, 500, 500, 500))
   Stats.median(List(5.0, 4.0, 3.0, 3.0))
 
 
