@@ -28,10 +28,10 @@ object Main extends App {
         }
       }
       reverset(num)
-
+    println(num)
   }
+  reverseDigits(13)
 
-  println(reverseDigits(13))
 
   //4
   def conditionalRemove(removeString: String,list: List[String]) = {
@@ -43,10 +43,10 @@ object Main extends App {
     else{
       list
     }
-
+    println(list)
   }
 
-  println(conditionalRemove("b", List("b", "a")))
+  conditionalRemove("b", List("b", "a"))
 
   //5
 
@@ -65,7 +65,7 @@ object Main extends App {
   isPalidrome("evee")
 
   //6
-  def isPerfectNumber(num: Int) : (Boolean, List[Int]) = {
+  def isPerfectNumber(num: Int) = {
     var list = ListBuffer[Int]()
 
     var sum = 0
@@ -78,45 +78,72 @@ object Main extends App {
 
     }
     if(sum == num){
-      return (true, list.toList)
+      println((true, list.toList))
     }
     else{
-      return (false, list.toList)
+      println((false, list.toList))
     }
 
 
   }
 
-  println(isPerfectNumber(6))
+  isPerfectNumber(6)
 
-  println(Stats.mean(List(5.0, 4.0, 3.0)))
-  println(Stats.min(List(5.0, 4.0, 3.0)))
-  println(Stats.max(List(5.0, 4.0, 3.0)))
-  println(Stats.mode(List(5.0, 4.0, 3.0, 3.0)))
+  Stats.mean(List(5.0, 4.0, 3.0))
+  Stats.min(List(5.0, 4.0, 3.0))
+  Stats.max(List(5.0, 4.0, 3.0))
+  Stats.mode(List(5.0, 4.0, 3.0, 3.0))
+  Stats.median(List(5.0, 4.0, 3.0, 3.0))
 
 
 
   FoldStats.mean(List(3.0, 2.0, 4.0))
+  FoldStats.min(List(3.0, 2.0, 4.0))
+  FoldStats.max(List(3.0, 2.0, 4.0))
+
+  val x = new ComplexNumber(5, 3)
+  x.Add(new ComplexNumber(3,5))
+  println(x.toString)
 }
 
 //7
-/*class ComplexNumber(x: Int){
-  var num = x
-  def get(): Int ={
-    return num
-  }
-  def set(newNum: ComplexNumber) ={
-    num = newNum
-  }
-  def Add(x: ComplexNumber) = {
+class ComplexNumber (val real: Double, val complex: Double) {
 
+  def Add(addend: ComplexNumber) = new ComplexNumber(this.real + addend.real, this.complex + addend.complex)
+  def Subtract(subtrahend: ComplexNumber) = new ComplexNumber(this.real - subtrahend.real, this.complex - subtrahend.complex)
+  def Multiply(multiplicand: ComplexNumber) = {
+    val realPart = (this.real * multiplicand.real) - (this.complex * multiplicand.complex)
+    val complexPart = (this.real * multiplicand.complex) + (this.complex * multiplicand.real)
+    new ComplexNumber(realPart, complexPart)
   }
-}*/
+
+  def Conjugate = new ComplexNumber(this.real, this.complex * -1)
+
+  def Divide (divisor: ComplexNumber) = {
+    val numerator = this Multiply  divisor.Conjugate
+    val denominator = divisor Multiply  divisor.Conjugate
+    new ComplexNumber(numerator.real / denominator.real, numerator.complex / denominator.real)
+  }
+
+  def Abs = sqrt(pow(this.real, 2) + (pow(this.complex, 2)))
+
+  def Reciprocal = this.Conjugate Divide  new ComplexNumber(pow(this.Abs, 2), 0)
+
+  override def toString = {
+    if(complex > 0) {
+      s"$real + ${complex}i"
+    }
+    else {
+      s"$real - ${complex * -1}i"
+    }
+  }
+}
+
 
 //8
 object Stats{
   def mean(list: List[Double]) ={
-    list.sum / list.length
+    println(list.sum / list.length)
   }
   def min(list: List[Double])={
     //val mininimumNumber = list.reduceLeft(FindLeast())
@@ -128,7 +155,7 @@ object Stats{
       }
 
     }
-    minValue
+    println(minValue)
   }
   def max(list: List[Double]) ={
     var maxValue = -Double.MaxValue
@@ -139,36 +166,43 @@ object Stats{
       }
 
     }
-    maxValue
+    println(maxValue)
   }
-  def mode(list: List[Double])={
-    var maxValue = 0.0
-    var maxCount = 0.0
+  def mode (liOne: List[Double]) = {
+    var elements = collection.mutable.Map[Double, Int]()
     var i = 0
-    while (i < list.length - 1) {
-      var count = 0
-      var j = 0
-      while (j < list.length - 1) {
-        if (list(j) == list(i)) {
-          count += 1; count
+    var mostOccurances = 0.0
+    while ( i <= (liOne.length - 1)){
+      var n = 0
+      var acc = 0
+      while ( n <= (liOne.length - 1)){
+        if (liOne(i) == liOne(n)){
+          acc = acc + 1
         }
-
-        {
-          j += 1; j
-        }
+        n = n + 1
       }
-      if (count > maxCount) {
-        maxCount = count
-        maxValue = list(i)
-      }
-
-      {
-        i += 1; i
-      }
+      elements = elements + (liOne(i) -> acc)
+      i = i + 1
     }
-    maxValue
+
+    mostOccurances = elements.maxBy(_._2)._1
+
+    println(mostOccurances)
   }
 
+  def median (liOne: List[Double])= {
+    var middle = 0.0
+    var isEven = liOne.length % 2
+    if (isEven == 0 ){
+      middle = ((liOne((liOne.length / 2) - 1) + liOne(liOne.length / 2)) / 2)
+
+    }
+    else {
+      middle = (liOne(round(liOne.length / 2)))
+    }
+
+    println(middle)
+  }
 
 
 }
@@ -183,12 +217,36 @@ object FoldStats{
     }
     println(total / list.length)
   }
-  /*def min(list: List[Double])={
-    var min = 0
-    list.fold(list(0)){
-      (z, i) => if(i < z)  else 0
+  def min(list: List[Double])= {
+    var min = Double.MaxValue
+    list.fold(Double.MaxValue) {
+      (z, i) =>
+        if (min > i) {
+          min = i
+          i
+        }
+        else {
+          i
+        }
     }
-  }*/
+    println(min)
+  }
+  def max(list: List[Double]) = {
+    var max = Double.MinValue
+    list.fold(Double.MinValue) {
+      (z, i) =>
+        if (max < i) {
+          max = i
+          i
+        }
+        else {
+          i
+        }
+    }
+    println(max)
+  }
+
+
 }
 
 
